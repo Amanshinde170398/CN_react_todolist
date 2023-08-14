@@ -23,7 +23,6 @@ const customFetch = async (url, { body, ...customConfig }) => {
     const data = await response.json();
     return {
       data,
-      success: true,
     };
   } catch (err) {
     console.log(err);
@@ -34,4 +33,25 @@ const customFetch = async (url, { body, ...customConfig }) => {
 // GET list of todos
 export const fetchTodos = () => {
   return customFetch(API_URLS.fetchTodoList(), { method: "GET" });
+};
+
+// Add todo item
+export const addTodo = (title, body) => {
+  return customFetch(API_URLS.addTodoItem(), {
+    body: { title, body },
+    method: "POST",
+  });
+};
+
+// remove todo item
+export const removeTodo = (id) => {
+  return customFetch(API_URLS.deletTodoItem(id), { method: "DELETE" });
+};
+
+//update todo item
+export const updateTodo = (title, id) => {
+  return customFetch(API_URLS.updateTodoItem(id), {
+    method: "PUT",
+    body: { id: id, title: title },
+  });
 };
